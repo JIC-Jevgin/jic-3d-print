@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JIC - Профессиональная 3D печать</title>
+    <title>JIC - Profesionální 3D tisk</title>
     <style>
         * {
             margin: 0;
@@ -16,13 +16,16 @@
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
 
         /* Header */
@@ -43,6 +46,18 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -87,12 +102,43 @@
             width: 100%;
         }
 
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .lang-btn:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
         /* Hero Section */
         .hero {
             margin-top: 80px;
             padding: 4rem 0;
             text-align: center;
             color: white;
+            width: 100%;
         }
 
         .hero h1 {
@@ -132,13 +178,18 @@
 
         /* Sections */
         .section {
-            padding: 4rem 0;
+            padding: 4rem 2rem;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            margin: 2rem 0;
+            margin: 2rem auto;
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
             border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: calc(100% - 40px);
         }
 
         .section h2 {
@@ -149,6 +200,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            padding: 0 1rem;
         }
 
         /* Gallery */
@@ -186,6 +238,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
+            max-width: 100%;
         }
 
         .k1c-info h3 {
@@ -224,6 +277,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            flex-direction: column;
         }
 
         /* Contact Section */
@@ -232,6 +286,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
+            max-width: 100%;
         }
 
         .contact-info {
@@ -311,20 +366,49 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-left {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-right {
+                order: -1;
+            }
+            
             .nav-links {
-                display: none;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 2rem 0;
+                margin-top: 160px;
             }
 
             .hero h1 {
                 font-size: 2.5rem;
             }
 
+            .section {
+                margin: 1rem 0;
+                padding: 2rem 0;
+            }
+
             .k1c-section {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .contact-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .gallery {
@@ -359,33 +443,42 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav container">
-            <div class="logo">JIC</div>
-            <ul class="nav-links">
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#gallery">Галерея</a></li>
-                <li><a href="#printer">Принтер</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
+            <div class="nav-left">
+                <div class="logo">JIC</div>
+                <ul class="nav-links">
+                    <li><a href="#home" data-key="nav-home">Domů</a></li>
+                    <li><a href="#gallery" data-key="nav-gallery">Galerie</a></li>
+                    <li><a href="#printer" data-key="nav-printer">Tiskárna</a></li>
+                    <li><a href="#contact" data-key="nav-contact">Kontakt</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <button class="lang-btn active" onclick="changeLanguage('cs')">CZ</button>
+                    <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
+                    <button class="lang-btn" onclick="changeLanguage('ua')">UA</button>
+                </div>
+            </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
-            <h1 class="floating">JIC 3D Printing</h1>
-            <p>Профессиональная 3D печать высочайшего качества</p>
-            <a href="#contact" class="cta-button">Заказать печать</a>
+            <h1 class="floating" data-key="hero-title">JIC 3D Tisk</h1>
+            <p data-key="hero-subtitle">Profesionální 3D tisk nejvyšší kvality</p>
+            <a href="#contact" class="cta-button" data-key="cta-button">Objednat tisk</a>
         </div>
     </section>
 
     <!-- About Section -->
     <div class="container">
         <section class="section">
-            <h2>О компании JIC</h2>
+            <h2 data-key="about-title">O společnosti JIC</h2>
             <div style="text-align: center; font-size: 1.2rem; line-height: 1.8;">
-                <p>JIC — это современная компания, специализирующаяся на профессиональной 3D печати. Мы предлагаем высококачественные услуги печати для различных отраслей: от прототипирования до серийного производства.</p>
+                <p data-key="about-text1">JIC je moderní společnost specializující se na profesionální 3D tisk. Nabízíme vysoce kvalitní tiskové služby pro různá odvětví: od prototypování až po sériovou výrobu.</p>
                 <br>
-                <p>Наша команда использует передовые технологии и материалы для создания точных и долговечных изделий. Мы гордимся своей репутацией надежного партнера в мире 3D печати.</p>
+                <p data-key="about-text2">Náš tým využívá nejmodernější technologie a materiály pro vytváření přesných a trvanlivých výrobků. Jsme hrdí na naši pověst spolehlivého partnera ve světě 3D tisku.</p>
             </div>
         </section>
     </div>
@@ -393,16 +486,16 @@
     <!-- Gallery Section -->
     <div class="container">
         <section id="gallery" class="section">
-            <h2>Наши работы</h2>
+            <h2 data-key="gallery-title">Naše práce</h2>
             <div class="gallery">
-                <div class="gallery-item">
-                    Фото 1 - Здесь будет ваше изображение
+                <div class="gallery-item" data-key="gallery-photo1">
+                    Foto 1 - Zde bude váš obrázek
                 </div>
-                <div class="gallery-item">
-                    Фото 2 - Здесь будет ваше изображение
+                <div class="gallery-item" data-key="gallery-photo2">
+                    Foto 2 - Zde bude váš obrázek
                 </div>
-                <div class="gallery-item">
-                    Фото 3 - Здесь будет ваше изображение
+                <div class="gallery-item" data-key="gallery-photo3">
+                    Foto 3 - Zde bude váš obrázek
                 </div>
             </div>
         </section>
@@ -411,27 +504,27 @@
     <!-- K1C Printer Section -->
     <div class="container">
         <section id="printer" class="section">
-            <h2>Наш принтер Creality K1C</h2>
+            <h2 data-key="printer-title">Naše tiskárna Creality K1C</h2>
             <div class="k1c-section">
                 <div class="k1c-info">
-                    <h3>Creality K1C - Скорость и точность</h3>
-                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">
-                        K1C — это высокоскоростной 3D принтер с закрытым корпусом, обеспечивающий исключительное качество печати и стабильную работу.
+                    <h3 data-key="printer-subtitle">Creality K1C - Rychlost a přesnost</h3>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;" data-key="printer-description">
+                        K1C je vysokorychlostní 3D tiskárna s uzavřenou komorou, zajišťující výjimečnou kvalitu tisku a stabilní provoz.
                     </p>
                     <ul class="k1c-features">
-                        <li>Максимальная скорость печати до 600 мм/с</li>
-                        <li>Закрытая камера печати для стабильной температуры</li>
-                        <li>Автоматическая калибровка стола</li>
-                        <li>Область печати: 220×220×250 мм</li>
-                        <li>Поддержка различных материалов (PLA, ABS, PETG, TPU)</li>
-                        <li>AI-контроль качества в реальном времени</li>
-                        <li>Система автоматического выравнивания</li>
-                        <li>Дистанционный мониторинг через приложение</li>
+                        <li data-key="printer-feature1">Maximální rychlost tisku až 600 mm/s</li>
+                        <li data-key="printer-feature2">Uzavřená tisková komora pro stabilní teplotu</li>
+                        <li data-key="printer-feature3">Automatická kalibrace podložky</li>
+                        <li data-key="printer-feature4">Oblast tisku: 220×220×250 mm</li>
+                        <li data-key="printer-feature5">Podpora různých materiálů (PLA, ABS, PETG, TPU)</li>
+                        <li data-key="printer-feature6">AI kontrola kvality v reálném čase</li>
+                        <li data-key="printer-feature7">Systém automatického vyrovnávání</li>
+                        <li data-key="printer-feature8">Vzdálené monitorování přes aplikaci</li>
                     </ul>
                 </div>
                 <div class="k1c-image">
-                    Creality K1C<br>
-                    <small style="font-size: 1rem;">Здесь будет фото принтера</small>
+                    <div>Creality K1C</div>
+                    <small style="font-size: 1rem;" data-key="printer-image-text">Zde bude foto tiskárny</small>
                 </div>
             </div>
         </section>
@@ -440,23 +533,23 @@
     <!-- Contact Section -->
     <div class="container">
         <section id="contact" class="section">
-            <h2>Свяжитесь с нами</h2>
+            <h2 data-key="contact-title">Kontaktujte nás</h2>
             <div class="contact-grid">
                 <div class="contact-info">
-                    <h3>Контактная информация</h3>
+                    <h3 data-key="contact-info-title">Kontaktní informace</h3>
                     <div class="contact-item">
                         orders.jicprint@gmail.com
                     </div>
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem;">
-                        Отправьте нам ваши 3D модели и техническое задание на email, и мы свяжемся с вами в кратчайшие сроки для обсуждения деталей заказа.
+                    <p style="margin-top: 1.5rem; font-size: 1.1rem;" data-key="contact-description">
+                        Zašlete nám své 3D modely a technické zadání na email a my se vám ozveme v nejkratším možném čase pro projednání detailů objednávky.
                     </p>
                 </div>
                 <div class="qr-section">
                     <div class="qr-code">
-                        QR-код на<br>Pinterest<br>jicprint
+                        QR kód na<br>Pinterest<br>jicprint
                     </div>
-                    <p style="font-size: 1.1rem; color: #666;">
-                        Отсканируйте QR-код для перехода на нашу страницу в Pinterest
+                    <p style="font-size: 1.1rem; color: #666;" data-key="qr-text">
+                        Naskenujte QR kód pro přechod na naši stránku Pinterest
                     </p>
                 </div>
             </div>
@@ -466,12 +559,149 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 JIC 3D Printing. Все права защищены.</p>
-            <p>Профессиональная 3D печать высочайшего качества</p>
+            <p>&copy; 2025 JIC 3D Tisk. <span data-key="footer-text">Všechna práva vyhrazena.</span></p>
+            <p data-key="footer-slogan">Profesionální 3D tisk nejvyšší kvality</p>
         </div>
     </footer>
 
     <script>
+        // Language translations
+        const translations = {
+            cs: {
+                'nav-home': 'Domů',
+                'nav-gallery': 'Galerie',
+                'nav-printer': 'Tiskárna',
+                'nav-contact': 'Kontakt',
+                'hero-title': 'JIC 3D Tisk',
+                'hero-subtitle': 'Profesionální 3D tisk nejvyšší kvality',
+                'cta-button': 'Objednat tisk',
+                'about-title': 'O společnosti JIC',
+                'about-text1': 'JIC je moderní společnost specializující se na profesionální 3D tisk. Nabízíme vysoce kvalitní tiskové služby pro různá odvětví: od prototypování až po sériovou výrobu.',
+                'about-text2': 'Náš tým využívá nejmodernější technologie a materiály pro vytváření přesných a trvanlivých výrobků. Jsme hrdí na naši pověst spolehlivého partnera ve světě 3D tisku.',
+                'gallery-title': 'Naše práce',
+                'gallery-photo1': 'Foto 1 - Zde bude váš obrázek',
+                'gallery-photo2': 'Foto 2 - Zde bude váš obrázek',
+                'gallery-photo3': 'Foto 3 - Zde bude váš obrázek',
+                'printer-title': 'Naše tiskárna Creality K1C',
+                'printer-subtitle': 'Creality K1C - Rychlost a přesnost',
+                'printer-description': 'K1C je vysokorychlostní 3D tiskárna s uzavřenou komorou, zajišťující výjimečnou kvalitu tisku a stabilní provoz.',
+                'printer-feature1': 'Maximální rychlost tisku až 600 mm/s',
+                'printer-feature2': 'Uzavřená tisková komora pro stabilní teplotu',
+                'printer-feature3': 'Automatická kalibrace podložky',
+                'printer-feature4': 'Oblast tisku: 220×220×250 mm',
+                'printer-feature5': 'Podpora různých materiálů (PLA, ABS, PETG, TPU)',
+                'printer-feature6': 'AI kontrola kvality v reálném čase',
+                'printer-feature7': 'Systém automatického vyrovnávání',
+                'printer-feature8': 'Vzdálené monitorování přes aplikaci',
+                'printer-image-text': 'Zde bude foto tiskárny',
+                'contact-title': 'Kontaktujte nás',
+                'contact-info-title': 'Kontaktní informace',
+                'contact-description': 'Zašlete nám své 3D modely a technické zadání na email a my se vám ozveme v nejkratším možném čase pro projednání detailů objednávky.',
+                'qr-text': 'Naskenujte QR kód pro přechod na naši stránku Pinterest',
+                'footer-text': 'Všechna práva vyhrazena.',
+                'footer-slogan': 'Profesionální 3D tisk nejvyšší kvality'
+            },
+            ru: {
+                'nav-home': 'Главная',
+                'nav-gallery': 'Галерея',
+                'nav-printer': 'Принтер',
+                'nav-contact': 'Контакты',
+                'hero-title': 'JIC 3D Печать',
+                'hero-subtitle': 'Профессиональная 3D печать высочайшего качества',
+                'cta-button': 'Заказать печать',
+                'about-title': 'О компании JIC',
+                'about-text1': 'JIC — это современная компания, специализирующаяся на профессиональной 3D печати. Мы предлагаем высококачественные услуги печати для различных отраслей: от прототипирования до серийного производства.',
+                'about-text2': 'Наша команда использует передовые технологии и материалы для создания точных и долговечных изделий. Мы гордимся своей репутацией надежного партнера в мире 3D печати.',
+                'gallery-title': 'Наши работы',
+                'gallery-photo1': 'Фото 1 - Здесь будет ваше изображение',
+                'gallery-photo2': 'Фото 2 - Здесь будет ваше изображение',
+                'gallery-photo3': 'Фото 3 - Здесь будет ваше изображение',
+                'printer-title': 'Наш принтер Creality K1C',
+                'printer-subtitle': 'Creality K1C - Скорость и точность',
+                'printer-description': 'K1C — это высокоскоростной 3D принтер с закрытым корпусом, обеспечивающий исключительное качество печати и стабильную работу.',
+                'printer-feature1': 'Максимальная скорость печати до 600 мм/с',
+                'printer-feature2': 'Закрытая камера печати для стабильной температуры',
+                'printer-feature3': 'Автоматическая калибровка стола',
+                'printer-feature4': 'Область печати: 220×220×250 мм',
+                'printer-feature5': 'Поддержка различных материалов (PLA, ABS, PETG, TPU)',
+                'printer-feature6': 'AI-контроль качества в реальном времени',
+                'printer-feature7': 'Система автоматического выравнивания',
+                'printer-feature8': 'Дистанционный мониторинг через приложение',
+                'printer-image-text': 'Здесь будет фото принтера',
+                'contact-title': 'Свяжитесь с нами',
+                'contact-info-title': 'Контактная информация',
+                'contact-description': 'Отправьте нам ваши 3D модели и техническое задание на email, и мы свяжемся с вами в кратчайшие сроки для обсуждения деталей заказа.',
+                'qr-text': 'Отсканируйте QR-код для перехода на нашу страницу Pinterest',
+                'footer-text': 'Все права защищены.',
+                'footer-slogan': 'Профессиональная 3D печать высочайшего качества'
+            },
+            ua: {
+                'nav-home': 'Головна',
+                'nav-gallery': 'Галерея',
+                'nav-printer': 'Принтер',
+                'nav-contact': 'Контакти',
+                'hero-title': 'JIC 3D Друк',
+                'hero-subtitle': 'Професійний 3D друк найвищої якості',
+                'cta-button': 'Замовити друк',
+                'about-title': 'Про компанію JIC',
+                'about-text1': 'JIC — це сучасна компанія, що спеціалізується на професійному 3D друці. Ми пропонуємо високоякісні послуги друку для різних галузей: від прототипування до серійного виробництва.',
+                'about-text2': 'Наша команда використовує передові технології та матеріали для створення точних і довговічних виробів. Ми пишаємося своєю репутацією надійного партнера у світі 3D друку.',
+                'gallery-title': 'Наші роботи',
+                'gallery-photo1': 'Фото 1 - Тут буде ваше зображення',
+                'gallery-photo2': 'Фото 2 - Тут буде ваше зображення',
+                'gallery-photo3': 'Фото 3 - Тут буде ваше зображення',
+                'printer-title': 'Наш принтер Creality K1C',
+                'printer-subtitle': 'Creality K1C - Швидкість та точність',
+                'printer-description': 'K1C — це високошвидкісний 3D принтер із закритим корпусом, що забезпечує винятково високу якість друку та стабільну роботу.',
+                'printer-feature1': 'Максимальна швидкість друку до 600 мм/с',
+                'printer-feature2': 'Закрита камера друку для стабільної температури',
+                'printer-feature3': 'Автоматичне калібрування столу',
+                'printer-feature4': 'Область друку: 220×220×250 мм',
+                'printer-feature5': 'Підтримка різних матеріалів (PLA, ABS, PETG, TPU)',
+                'printer-feature6': 'AI-контроль якості в реальному часі',
+                'printer-feature7': 'Система автоматичного вирівнювання',
+                'printer-feature8': 'Дистанційний моніторинг через додаток',
+                'printer-image-text': 'Тут буде фото принтера',
+                'contact-title': "Зв'яжіться з нами",
+                'contact-info-title': 'Контактна інформація',
+                'contact-description': 'Надішліть нам свої 3D моделі та технічне завдання на email, і ми зв\'яжемося з вами в найкоротші терміни для обговорення деталей замовлення.',
+                'qr-text': 'Сканирууйте QR-код для переходу на нашу сторінку Pinterest',
+                'footer-text': 'Усі права захищені.',
+                'footer-slogan': 'Професійний 3D друк найвищої якості'
+            }
+        };
+
+        let currentLanguage = 'cs';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update document language
+            document.documentElement.lang = lang;
+            
+            // Update title
+            const titles = {
+                cs: 'JIC - Profesionální 3D tisk',
+                ru: 'JIC - Профессиональная 3D печать',
+                ua: 'JIC - Професійний 3D друк'
+            };
+            document.title = titles[lang];
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
