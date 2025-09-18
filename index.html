@@ -177,6 +177,211 @@
             box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .file-upload {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 20px;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .file-upload:hover {
+            background: #f0f2ff;
+            border-color: #5a67d8;
+        }
+
+        .file-upload input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-text {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .contact-methods {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .contact-methods h3 {
+            margin: 0 0 1rem 0;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .contact-method strong {
+            color: #333;
+            margin-left: 0.5rem;
+        }
+
         /* Sections */
         .section {
             padding: 4rem 2rem;
@@ -415,6 +620,20 @@
             .gallery {
                 grid-template-columns: 1fr;
             }
+
+            .modal {
+                margin: 1rem;
+                max-height: 95vh;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Hover effects */
@@ -467,9 +686,99 @@
     <section id="home" class="hero">
         <div class="container">
             <h1 class="floating" data-key="hero-title">JIC 3D Tisk</h1>
-            <a href="#contact" class="cta-button" data-key="cta-button">Objednat tisk</a>
+            <button class="cta-button" onclick="openOrderModal()" data-key="cta-button">Objednat tisk</button>
         </div>
     </section>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-key="modal-title">Objednat 3D tisk</h2>
+                <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm" action="https://formspree.io/f/xnnbkrka" method="POST">
+                    <input type="hidden" name="_replyto" id="replyto">
+                    <input type="hidden" name="_subject" value="Новая заявка на 3D печать">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" data-key="form-firstname">Jméno *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" data-key="form-lastname">Příjmení *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" data-key="form-email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" data-key="form-phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="material" data-key="form-material">Materiál</label>
+                        <select id="material" name="material">
+                            <option value="pla" data-key="material-pla">PLA - standardní</option>
+                            <option value="abs" data-key="material-abs">ABS - odolný</option>
+                            <option value="petg" data-key="material-petg">PETG - průhledný/silný</option>
+                            <option value="tpu" data-key="material-tpu">TPU - flexibilní</option>
+                            <option value="other" data-key="material-other">Jiný - upřesni v poznámce</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="color" data-key="form-color">Barva</label>
+                            <input type="text" id="color" name="color" placeholder="např. černá, bílá, červená...">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity" data-key="form-quantity">Počet kusů</label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" data-key="form-description">Popis projektu *</label>
+                        <textarea id="description" name="message" required data-key="form-description-placeholder" placeholder="Popište váš projekt - co chcete vytisknout, rozměry, speciální požadavky..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-key="form-files">3D soubory (STL, OBJ, 3MF)</label>
+                        <div class="file-upload">
+                            <input type="file" id="files" name="files" multiple accept=".stl,.obj,.3mf,.step,.stp">
+                            <div class="file-upload-text" data-key="file-upload-text">
+                                📁 Klikněte pro výběr souborů nebo je sem přetáhněte
+                            </div>
+                        </div>
+                        <div id="fileList" style="margin-top: 10px; color: #666;"></div>
+                        <p style="font-size: 0.9rem; color: #888; margin-top: 0.5rem;" data-key="file-note">
+                            Poznámka: Soubory nebudou odeslány přes formulář. Pošlete je prosím dodatečně na orders.jicprint@gmail.com
+                        </p>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" data-key="submit-btn">Odeslat objednávku</button>
+                </form>
+                
+                <div class="contact-methods">
+                    <h3 data-key="contact-methods-title">Alternativní kontakt</h3>
+                    <div class="contact-method">
+                        📧 <strong>orders.jicprint@gmail.com</strong>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;" data-key="contact-methods-note">
+                        Můžete nám také poslat soubory a požadavky přímo na email
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- About Section -->
     <div class="container">
@@ -526,9 +835,8 @@
                     </ul>
                 </div>
                 <div class="k1c-image">
-                    <div class="k1c-image">
-                        <img src="K1C.png" alt="Creality K1C" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
-                    </div>
+                    <img src="K1C.png" alt="Creality K1C" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+                </div>
             </div>
         </section>
     </div>
@@ -577,13 +885,31 @@
                 'nav-contact': 'Kontakt',
                 'hero-title': 'JIC 3D Tisk',
                 'cta-button': 'Objednat tisk',
+                'modal-title': 'Objednat 3D tisk',
+                'form-firstname': 'Jméno *',
+                'form-lastname': 'Příjmení *',
+                'form-email': 'Email *',
+                'form-phone': 'Telefon',
+                'form-material': 'Materiál',
+                'material-pla': 'PLA - standardní',
+                'material-abs': 'ABS - odolný',
+                'material-petg': 'PETG - průhledný/silný',
+                'material-tpu': 'TPU - flexibilní',
+                'material-other': 'Jiný - upřesni v poznámce',
+                'form-color': 'Barva',
+                'form-quantity': 'Počet kusů',
+                'form-description': 'Popis projektu *',
+                'form-description-placeholder': 'Popište váš projekt - co chcete vytisknout, rozměry, speciální požadavky...',
+                'form-files': '3D soubory (STL, OBJ, 3MF)',
+                'file-upload-text': '📁 Klikněte pro výběr souborů nebo je sem přetáhněte',
+                'file-note': 'Poznámka: Soubory nebudou odeslány přes formulář. Pošlete je prosím dodatečně na orders.jicprint@gmail.com',
+                'submit-btn': 'Odeslat objednávku',
+                'contact-methods-title': 'Alternativní kontakt',
+                'contact-methods-note': 'Můžete nám také poslat soubory a požadavky přímo na email',
                 'about-title': 'O společnosti JIC',
                 'about-text1': 'Jsem JIC, věnuji se 3D tisku. Snažím se pomáhat lidem realizovat jejich nápady, ať už jde o vytištění prototypu nebo jen drobnosti pro radost.',
                 'about-text2': 'Pro tisk používám různé metody a materiály, abych dosáhl co nejlepšího výsledku. S každým projektem se učím něco nového a beru to jako osobní výzvu.',
                 'gallery-title': 'Naše práce',
-                'gallery-photo1': 'Foto 1 - Zde bude váš obrázek',
-                'gallery-photo2': 'Foto 2 - Zde bude váš obrázek',
-                'gallery-photo3': 'Foto 3 - Zde bude váš obrázek',
                 'printer-title': 'Naše tiskárna Creality K1C',
                 'printer-subtitle': 'Creality K1C - Rychlost a přesnost',
                 'printer-description': 'K1C je vysokorychlostní 3D tiskárna s uzavřenou komorou, zajišťující výjimečnou kvalitu tisku a stabilní provoz.',
@@ -595,7 +921,6 @@
                 'printer-feature6': 'AI kontrola kvality v reálném čase',
                 'printer-feature7': 'Systém automatického vyrovnávání',
                 'printer-feature8': 'Vzdálené monitorování přes aplikaci',
-                'printer-image-text': 'Zde bude foto tiskárny',
                 'contact-title': 'Kontaktujte nás',
                 'contact-info-title': 'Kontaktní informace',
                 'contact-description': 'Zašlete nám své 3D modely a technické zadání na email a my se vám ozveme v nejkratším možném čase pro projednání detailů objednávky.',
@@ -610,13 +935,31 @@
                 'nav-contact': 'Контакты',
                 'hero-title': 'JIC 3D Печать',
                 'cta-button': 'Заказать печать',
+                'modal-title': 'Заказать 3D печать',
+                'form-firstname': 'Имя *',
+                'form-lastname': 'Фамилия *',
+                'form-email': 'Email *',
+                'form-phone': 'Телефон',
+                'form-material': 'Материал',
+                'material-pla': 'PLA - стандартный',
+                'material-abs': 'ABS - прочный',
+                'material-petg': 'PETG - прозрачный/прочный',
+                'material-tpu': 'TPU - гибкий',
+                'material-other': 'Другой - укажите в заметке',
+                'form-color': 'Цвет',
+                'form-quantity': 'Количество',
+                'form-description': 'Описание проекта *',
+                'form-description-placeholder': 'Опишите ваш проект - что нужно напечатать, размеры, особые требования...',
+                'form-files': '3D файлы (STL, OBJ, 3MF)',
+                'file-upload-text': '📁 Нажмите для выбора файлов или перетащите их сюда',
+                'file-note': 'Примечание: Файлы не будут отправлены через форму. Пожалуйста, отправьте их дополнительно на orders.jicprint@gmail.com',
+                'submit-btn': 'Отправить заказ',
+                'contact-methods-title': 'Альтернативный контакт',
+                'contact-methods-note': 'Вы также можете отправить файлы и требования напрямую на email',
                 'about-title': 'О компании JIC',
                 'about-text1': 'JIC — это небольшая мастерская, где я занимаюсь 3D-печатью. Я помогаю людям воплощать их идеи в реальность, будь то печать прототипа или просто мелочи для души.',
                 'about-text2': 'Для печати я использую различные методы и материалы, стараясь достичь наилучшего результата. Каждый проект для меня — это новый опыт и личный вызов.',
                 'gallery-title': 'Наши работы',
-                'gallery-photo1': 'Фото 1 - Здесь будет ваше изображение',
-                'gallery-photo2': 'Фото 2 - Здесь будет ваше изображение',
-                'gallery-photo3': 'Фото 3 - Здесь будет ваше изображение',
                 'printer-title': 'Наш принтер Creality K1C',
                 'printer-subtitle': 'Creality K1C - Скорость и точность',
                 'printer-description': 'K1C — это высокоскоростной 3D принтер с закрытым корпусом, обеспечивающий исключительное качество печати и стабильную работу.',
@@ -628,7 +971,6 @@
                 'printer-feature6': 'AI-контроль качества в реальном времени',
                 'printer-feature7': 'Система автоматического выравнивания',
                 'printer-feature8': 'Дистанционный мониторинг через приложение',
-                'printer-image-text': 'Здесь будет фото принтера',
                 'contact-title': 'Свяжитесь с нами',
                 'contact-info-title': 'Контактная информация',
                 'contact-description': 'Отправьте нам ваши 3D модели и техническое задание на email, и мы свяжемся с вами в кратчайшие сроки для обсуждения деталей заказа.',
@@ -643,13 +985,31 @@
                 'nav-contact': 'Контакти',
                 'hero-title': 'JIC 3D Друк',
                 'cta-button': 'Замовити друк',
+                'modal-title': 'Замовити 3D друк',
+                'form-firstname': "Ім'я *",
+                'form-lastname': 'Прізвище *',
+                'form-email': 'Email *',
+                'form-phone': 'Телефон',
+                'form-material': 'Матеріал',
+                'material-pla': 'PLA - стандартний',
+                'material-abs': 'ABS - міцний',
+                'material-petg': 'PETG - прозорий/міцний',
+                'material-tpu': 'TPU - гнучкий',
+                'material-other': 'Інший - вкажіть у примітці',
+                'form-color': 'Колір',
+                'form-quantity': 'Кількість',
+                'form-description': 'Опис проєкту *',
+                'form-description-placeholder': 'Опишіть ваш проєкт - що потрібно надрукувати, розміри, особливі вимоги...',
+                'form-files': '3D файли (STL, OBJ, 3MF)',
+                'file-upload-text': '📁 Натисніть для вибору файлів або перетягніть їх сюди',
+                'file-note': 'Примітка: Файли не будуть надіслані через форму. Будь ласка, надішліть їх додатково на orders.jicprint@gmail.com',
+                'submit-btn': 'Відправити замовлення',
+                'contact-methods-title': 'Альтернативний контакт',
+                'contact-methods-note': 'Ви також можете надіслати файли та вимоги безпосередньо на email',
                 'about-title': 'Про компанію JIC',
                 'about-text1': 'JIC — це невелика майстерня, де я займаюся 3D-друком. Я допомагаю людям втілювати їхні ідеї в реальність, чи то друк прототипу, чи просто дрібниці для душі.',
                 'about-text2': 'Для друку я використовую різні методи та матеріали, намагаючись досягти найкращого результату. Кожен проєкт для мене — це новий досвід та особистий виклик.',
                 'gallery-title': 'Наші роботи',
-                'gallery-photo1': 'Фото 1 - Тут буде ваше зображення',
-                'gallery-photo2': 'Фото 2 - Тут буде ваше зображення',
-                'gallery-photo3': 'Фото 3 - Тут буде ваше зображення',
                 'printer-title': 'Наш принтер Creality K1C',
                 'printer-subtitle': 'Creality K1C - Швидкість та точність',
                 'printer-description': 'K1C — це високошвидкісний 3D принтер із закритим корпусом, що забезпечує винятково високу якість друку та стабільну роботу.',
@@ -661,7 +1021,6 @@
                 'printer-feature6': 'AI-контроль якості в реальному часі',
                 'printer-feature7': 'Система автоматичного вирівнювання',
                 'printer-feature8': 'Дистанційний моніторинг через додаток',
-                'printer-image-text': 'Тут буде фото принтера',
                 'contact-title': "Зв'яжіться з нами",
                 'contact-info-title': 'Контактна інформація',
                 'contact-description': 'Надішліть нам свої 3D моделі та технічне завдання на email, і ми зв\'яжемося з вами в найкоротші терміни для обговорення деталей замовлення.',
@@ -686,7 +1045,21 @@
             document.querySelectorAll('[data-key]').forEach(element => {
                 const key = element.getAttribute('data-key');
                 if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                    if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'tel')) {
+                        element.placeholder = translations[lang][key];
+                    } else if (element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Update select options
+            document.querySelectorAll('select option[data-key]').forEach(option => {
+                const key = option.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    option.textContent = translations[lang][key];
                 }
             });
 
@@ -701,6 +1074,235 @@
             };
             document.title = titles[lang];
         }
+
+        // Modal functions
+        function openOrderModal() {
+            const modal = document.getElementById('orderModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderModal() {
+            const modal = document.getElementById('orderModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset form
+            document.getElementById('orderForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+        }
+
+        // File upload handler and form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('files');
+            const fileList = document.getElementById('fileList');
+            const fileUpload = document.querySelector('.file-upload');
+
+            // Set replyto field
+            const emailField = document.getElementById('email');
+            const replytoField = document.getElementById('replyto');
+            
+            emailField.addEventListener('input', function() {
+                replytoField.value = this.value;
+            });
+
+            // File selection handler
+            fileInput.addEventListener('change', function() {
+                updateFileList();
+            });
+
+            // Drag and drop handlers
+            fileUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                fileUpload.style.background = '#e6ebff';
+                fileUpload.style.borderColor = '#5a67d8';
+            });
+
+            fileUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                fileUpload.style.background = '#f8f9ff';
+                fileUpload.style.borderColor = '#667eea';
+            });
+
+            fileUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                fileUpload.style.background = '#f8f9ff';
+                fileUpload.style.borderColor = '#667eea';
+                
+                const files = e.dataTransfer.files;
+                fileInput.files = files;
+                updateFileList();
+            });
+
+            function updateFileList() {
+                const files = fileInput.files;
+                if (files.length === 0) {
+                    fileList.innerHTML = '';
+                    return;
+                }
+
+                const labels = {
+                    cs: 'Vybrané soubory:',
+                    ru: 'Выбранные файлы:',
+                    ua: 'Вибрані файли:'
+                };
+
+                let html = `<strong>${labels[currentLanguage]}</strong><br>`;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const size = (file.size / 1024 / 1024).toFixed(2);
+                    html += `📄 ${file.name} (${size} MB)<br>`;
+                }
+                fileList.innerHTML = html;
+            }
+
+            // Form submission handler
+            document.getElementById('orderForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                const loadingTexts = {
+                    cs: 'Odesílání...',
+                    ru: 'Отправка...',
+                    ua: 'Відправка...'
+                };
+                submitBtn.textContent = loadingTexts[currentLanguage];
+                
+                const formData = new FormData(this);
+                
+                // Remove files from FormData since we can't send them via Formspree
+                formData.delete('files');
+                
+                // Send via Formspree
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showSuccessMessage();
+                    } else {
+                        response.json().then(data => {
+                            if (Object.hasOwnProperty.call(data, 'errors')) {
+                                showErrorMessage();
+                            } else {
+                                showSuccessMessage();
+                            }
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showErrorMessage();
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                });
+            });
+        });
+
+        function showSuccessMessage() {
+            const messages = {
+                cs: {
+                    title: '✅ Objednávka odeslána!',
+                    text: 'Děkujeme za vaši objednávku. Ozveme se vám v nejkratším možném čase na uvedený email.',
+                    note: 'Nezapomeňte připojit své 3D soubory v dalším emailu na orders.jicprint@gmail.com'
+                },
+                ru: {
+                    title: '✅ Заказ отправлен!',
+                    text: 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время по указанному email.',
+                    note: 'Не забудьте приложить ваши 3D файлы в отдельном письме на orders.jicprint@gmail.com'
+                },
+                ua: {
+                    title: '✅ Замовлення відправлено!',
+                    text: 'Дякуємо за ваше замовлення. Ми зв\'яжемося з вами найближчим часом за вказаним email.',
+                    note: 'Не забудьте додати ваші 3D файли в окремому листі на orders.jicprint@gmail.com'
+                }
+            };
+
+            const msg = messages[currentLanguage];
+            
+            const successHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">${msg.title}</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">${msg.text}</p>
+                    <div style="background: #f0f7ff; padding: 1rem; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 1.5rem;">
+                        <p style="margin: 0; color: #555;"><strong>📎 Важно:</strong> ${msg.note}</p>
+                    </div>
+                    <button onclick="closeOrderModal()" 
+                            style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                        OK
+                    </button>
+                </div>
+            `;
+
+            document.querySelector('.modal-body').innerHTML = successHTML;
+        }
+
+        function showErrorMessage() {
+            const messages = {
+                cs: {
+                    title: '❌ Chyba při odesílání',
+                    text: 'Omlouváme se, při odesílání došlo k chybě. Zkuste to prosím znovu nebo nás kontaktujte přímo.',
+                    retry: 'Zkusit znovu',
+                    contact: 'Kontaktovat přímo'
+                },
+                ru: {
+                    title: '❌ Ошибка отправки',
+                    text: 'Извините, при отправке произошла ошибка. Попробуйте еще раз или свяжитесь с нами напрямую.',
+                    retry: 'Попробовать снова',
+                    contact: 'Связаться напрямую'
+                },
+                ua: {
+                    title: '❌ Помилка відправки',
+                    text: 'Вибачте, при відправці сталася помилка. Спробуйте ще раз або зв\'яжіться з нами безпосередньо.',
+                    retry: 'Спробувати знову',
+                    contact: 'Зв\'язатися безпосередньо'
+                }
+            };
+
+            const msg = messages[currentLanguage];
+            
+            const errorHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">😞</div>
+                    <h3 style="color: #e74c3c; margin-bottom: 1rem;">${msg.title}</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">${msg.text}</p>
+                    <div style="background: #fff5f5; padding: 1rem; border-radius: 8px; border-left: 4px solid #e74c3c; margin-bottom: 1.5rem;">
+                        <p style="margin: 0; color: #555;"><strong>📧 Email:</strong> orders.jicprint@gmail.com</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="location.reload()" 
+                                style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                            ${msg.retry}
+                        </button>
+                        <button onclick="window.location.href='mailto:orders.jicprint@gmail.com'" 
+                                style="background: #e74c3c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                            ${msg.contact}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.modal-body').innerHTML = errorHTML;
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('orderModal');
+            if (e.target === modal) {
+                closeOrderModal();
+            }
+        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
