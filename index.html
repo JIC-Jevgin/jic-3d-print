@@ -5,443 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JIC - 3D tisk</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Language Switcher */
-        .language-switcher {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            opacity: 0.7;
-        }
-
-        .lang-btn:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-
-        .lang-btn.active {
-            opacity: 1;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            padding: 4rem 0;
-            text-align: center;
-            color: white;
-            width: 100%;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
-        }
-
-        /* Sections */
-        .section {
-            padding: 4rem 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            margin: 2rem auto;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: transform 0.3s ease;
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            width: calc(100% - 40px);
-        }
-
-        .section h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            padding: 0 1rem;
-        }
-
-        /* Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .gallery-item {
-            background: #f8f9fa;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #667eea;
-            color: #667eea;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        /* K1C Section */
-        .k1c-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 100%;
-        }
-
-        .k1c-info h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-
-        .k1c-features {
-            list-style: none;
-        }
-
-        .k1c-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .k1c-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .k1c-image {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 15px;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
-            flex-direction: column;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 100%;
-        }
-
-        .contact-info {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
-        }
-
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-item::before {
-            content: '📧';
-            margin-right: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .qr-section {
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            background: white;
-            margin: 0 auto 1rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 2rem;
-            border-radius: 20px 20px 0 0;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-left {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-right {
-                order: -1;
-            }
-            
-            .nav-links {
-                display: flex;
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero {
-                padding: 2rem 0;
-                margin-top: 160px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section {
-                margin: 1rem 0;
-                padding: 2rem 0;
-            }
-
-            .k1c-section {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .gallery {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Hover effects */
-        .section:hover {
-            transform: translateY(-2px);
-            transition: transform 0.3s ease;
-        }
-        
-        /* Smooth scroll behavior */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Fix for backdrop blur on different browsers */
-        @supports not (backdrop-filter: blur(10px)) {
-            .header {
-                background: rgba(255, 255, 255, 0.98);
-            }
-            
-            .section {
-                background: rgba(255, 255, 255, 0.98);
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="nav container">
             <div class="nav-left">
@@ -463,15 +30,102 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
             <h1 class="floating" data-key="hero-title">JIC 3D Tisk</h1>
-            <a href="#contact" class="cta-button" data-key="cta-button">Objednat tisk</a>
+            <button class="cta-button" onclick="openOrderModal()" data-key="cta-button">Objednat tisk</button>
         </div>
     </section>
 
-    <!-- About Section -->
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-key="modal-title">Objednat 3D tisk</h2>
+                <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm" action="orders.send.php" method="POST">
+                    <input type="hidden" name="_replyto" id="replyto">
+                    <input type="hidden" name="_subject" value="Новая заявка на 3D печать">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" data-key="form-firstname">Jméno *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" data-key="form-lastname">Příjmení *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" data-key="form-email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" data-key="form-phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="material" data-key="form-material">Materiál</label>
+                        <select id="material" name="material">
+                            <option value="pla" data-key="material-pla">PLA - standardní</option>
+                            <option value="abs" data-key="material-abs">ABS - odolný</option>
+                            <option value="petg" data-key="material-petg">PETG - průhledný/silný</option>
+                            <option value="tpu" data-key="material-tpu">TPU - flexibilní</option>
+                            <option value="other" data-key="material-other">Jiný - upřesni v poznámce</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="color" data-key="form-color">Barva</label>
+                            <input type="text" id="color" name="color" placeholder="např. černá, bílá, červená...">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity" data-key="form-quantity">Počet kusů</label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" data-key="form-description">Popis projektu *</label>
+                        <textarea id="description" name="message" required data-key="form-description-placeholder" placeholder="Popište váš projekt - co chcete vytisknout, rozměry, speciální požadavky..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-key="form-files">3D soubory (STL, OBJ, 3MF)</label>
+                        <div class="file-upload">
+                            <input type="file" name="attachment" accept="image/png, image/jpeg">
+                            <div class="file-upload-text" data-key="file-upload-text">
+                                📁 Klikněte pro výběr souborů nebo je sem přetáhněte
+                            </div>
+                        </div>
+                        <div id="fileList" style="margin-top: 10px; color: #666;"></div>
+                        <p style="font-size: 0.9rem; color: #888; margin-top: 0.5rem;" data-key="file-note">
+                            Poznámka: Soubory nebudou odeslány přes formulář. Pošlete je prosím dodatečně na orders.jicprint@gmail.com
+                        </p>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" data-key="submit-btn">Odeslat objednávku</button>
+                </form>
+                
+                <div class="contact-methods">
+                    <h3 data-key="contact-methods-title">Alternativní kontakt</h3>
+                    <div class="contact-method">
+                        📧 <strong>orders.jicprint@gmail.com</strong>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;" data-key="contact-methods-note">
+                        Můžete nám také poslat soubory a požadavky přímo na email
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <section class="section">
             <h2 data-key="about-title">O společnosti JIC</h2>
@@ -483,7 +137,6 @@
         </section>
     </div>
 
-    <!-- Gallery Section -->
     <div class="container">
         <section id="gallery" class="section">
             <h2 data-key="gallery-title">Naše práce</h2>
@@ -504,7 +157,6 @@
         </section>
     </div>
 
-    <!-- K1C Printer Section -->
     <div class="container">
         <section id="printer" class="section">
             <h2 data-key="printer-title">Naše tiskárna Creality K1C</h2>
@@ -526,14 +178,12 @@
                     </ul>
                 </div>
                 <div class="k1c-image">
-                    <div class="k1c-image">
-                        <img src="K1C.png" alt="Creality K1C" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
-                    </div>
+                    <img src="K1C.png" alt="Creality K1C" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+                </div>
             </div>
         </section>
     </div>
 
-    <!-- Contact Section -->
     <div class="container">
         <section id="contact" class="section">
             <h2 data-key="contact-title">Kontaktujte nás</h2>
@@ -547,19 +197,10 @@
                         Zašlete nám své 3D modely a technické zadání na email a my se vám ozveme v nejkratším možném čase pro projednání detailů objednávky.
                     </p>
                 </div>
-                <div class="qr-section">
-                    <div class="qr-code">
-                        <img src="qr-code.png" alt="QR код Pinterest" style="width: 180px; height: 180px;">
-                    </div>
-                    <p style="font-size: 1.1rem; color: #666;" data-key="qr-text">
-                        Naskenujte QR kód pro přechod na naši stránku Pinterest
-                    </p>
                 </div>
-            </div>
         </section>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 JIC 3D Tisk. <span data-key="footer-text">Všechna práva vyhrazena.</span></p>
@@ -567,177 +208,6 @@
         </div>
     </footer>
 
-    <script>
-        // Language translations
-        const translations = {
-            cs: {
-                'nav-home': 'Domů',
-                'nav-gallery': 'Galerie',
-                'nav-printer': 'Tiskárna',
-                'nav-contact': 'Kontakt',
-                'hero-title': 'JIC 3D Tisk',
-                'cta-button': 'Objednat tisk',
-                'about-title': 'O společnosti JIC',
-                'about-text1': 'Jsem JIC, věnuji se 3D tisku. Snažím se pomáhat lidem realizovat jejich nápady, ať už jde o vytištění prototypu nebo jen drobnosti pro radost.',
-                'about-text2': 'Pro tisk používám různé metody a materiály, abych dosáhl co nejlepšího výsledku. S každým projektem se učím něco nového a beru to jako osobní výzvu.',
-                'gallery-title': 'Naše práce',
-                'gallery-photo1': 'Foto 1 - Zde bude váš obrázek',
-                'gallery-photo2': 'Foto 2 - Zde bude váš obrázek',
-                'gallery-photo3': 'Foto 3 - Zde bude váš obrázek',
-                'printer-title': 'Naše tiskárna Creality K1C',
-                'printer-subtitle': 'Creality K1C - Rychlost a přesnost',
-                'printer-description': 'K1C je vysokorychlostní 3D tiskárna s uzavřenou komorou, zajišťující výjimečnou kvalitu tisku a stabilní provoz.',
-                'printer-feature1': 'Maximální rychlost tisku až 600 mm/s',
-                'printer-feature2': 'Uzavřená tisková komora pro stabilní teplotu',
-                'printer-feature3': 'Automatická kalibrace podložky',
-                'printer-feature4': 'Oblast tisku: 220×220×250 mm',
-                'printer-feature5': 'Podpora různých materiálů (PLA, ABS, PETG, TPU)',
-                'printer-feature6': 'AI kontrola kvality v reálném čase',
-                'printer-feature7': 'Systém automatického vyrovnávání',
-                'printer-feature8': 'Vzdálené monitorování přes aplikaci',
-                'printer-image-text': 'Zde bude foto tiskárny',
-                'contact-title': 'Kontaktujte nás',
-                'contact-info-title': 'Kontaktní informace',
-                'contact-description': 'Zašlete nám své 3D modely a technické zadání na email a my se vám ozveme v nejkratším možném čase pro projednání detailů objednávky.',
-                'qr-text': 'Naskenujte QR kód pro přechod na naši stránku Pinterest',
-                'footer-text': 'Všechna práva vyhrazena.',
-                'footer-slogan': 'Profesionální 3D tisk nejvyšší kvality'
-            },
-            ru: {
-                'nav-home': 'Главная',
-                'nav-gallery': 'Галерея',
-                'nav-printer': 'Принтер',
-                'nav-contact': 'Контакты',
-                'hero-title': 'JIC 3D Печать',
-                'cta-button': 'Заказать печать',
-                'about-title': 'О компании JIC',
-                'about-text1': 'JIC — это небольшая мастерская, где я занимаюсь 3D-печатью. Я помогаю людям воплощать их идеи в реальность, будь то печать прототипа или просто мелочи для души.',
-                'about-text2': 'Для печати я использую различные методы и материалы, стараясь достичь наилучшего результата. Каждый проект для меня — это новый опыт и личный вызов.',
-                'gallery-title': 'Наши работы',
-                'gallery-photo1': 'Фото 1 - Здесь будет ваше изображение',
-                'gallery-photo2': 'Фото 2 - Здесь будет ваше изображение',
-                'gallery-photo3': 'Фото 3 - Здесь будет ваше изображение',
-                'printer-title': 'Наш принтер Creality K1C',
-                'printer-subtitle': 'Creality K1C - Скорость и точность',
-                'printer-description': 'K1C — это высокоскоростной 3D принтер с закрытым корпусом, обеспечивающий исключительное качество печати и стабильную работу.',
-                'printer-feature1': 'Максимальная скорость печати до 600 мм/с',
-                'printer-feature2': 'Закрытая камера печати для стабильной температуры',
-                'printer-feature3': 'Автоматическая калибровка стола',
-                'printer-feature4': 'Область печати: 220×220×250 мм',
-                'printer-feature5': 'Поддержка различных материалов (PLA, ABS, PETG, TPU)',
-                'printer-feature6': 'AI-контроль качества в реальном времени',
-                'printer-feature7': 'Система автоматического выравнивания',
-                'printer-feature8': 'Дистанционный мониторинг через приложение',
-                'printer-image-text': 'Здесь будет фото принтера',
-                'contact-title': 'Свяжитесь с нами',
-                'contact-info-title': 'Контактная информация',
-                'contact-description': 'Отправьте нам ваши 3D модели и техническое задание на email, и мы свяжемся с вами в кратчайшие сроки для обсуждения деталей заказа.',
-                'qr-text': 'Отсканируйте QR-код для перехода на нашу страницу Pinterest',
-                'footer-text': 'Все права защищены.',
-                'footer-slogan': 'Профессиональная 3D печать высочайшего качества'
-            },
-            ua: {
-                'nav-home': 'Головна',
-                'nav-gallery': 'Галерея',
-                'nav-printer': 'Принтер',
-                'nav-contact': 'Контакти',
-                'hero-title': 'JIC 3D Друк',
-                'cta-button': 'Замовити друк',
-                'about-title': 'Про компанію JIC',
-                'about-text1': 'JIC — це невелика майстерня, де я займаюся 3D-друком. Я допомагаю людям втілювати їхні ідеї в реальність, чи то друк прототипу, чи просто дрібниці для душі.',
-                'about-text2': 'Для друку я використовую різні методи та матеріали, намагаючись досягти найкращого результату. Кожен проєкт для мене — це новий досвід та особистий виклик.',
-                'gallery-title': 'Наші роботи',
-                'gallery-photo1': 'Фото 1 - Тут буде ваше зображення',
-                'gallery-photo2': 'Фото 2 - Тут буде ваше зображення',
-                'gallery-photo3': 'Фото 3 - Тут буде ваше зображення',
-                'printer-title': 'Наш принтер Creality K1C',
-                'printer-subtitle': 'Creality K1C - Швидкість та точність',
-                'printer-description': 'K1C — це високошвидкісний 3D принтер із закритим корпусом, що забезпечує винятково високу якість друку та стабільну роботу.',
-                'printer-feature1': 'Максимальна швидкість друку до 600 мм/с',
-                'printer-feature2': 'Закрита камера друку для стабільної температури',
-                'printer-feature3': 'Автоматичне калібрування столу',
-                'printer-feature4': 'Область друку: 220×220×250 мм',
-                'printer-feature5': 'Підтримка різних матеріалів (PLA, ABS, PETG, TPU)',
-                'printer-feature6': 'AI-контроль якості в реальному часі',
-                'printer-feature7': 'Система автоматичного вирівнювання',
-                'printer-feature8': 'Дистанційний моніторинг через додаток',
-                'printer-image-text': 'Тут буде фото принтера',
-                'contact-title': "Зв'яжіться з нами",
-                'contact-info-title': 'Контактна інформація',
-                'contact-description': 'Надішліть нам свої 3D моделі та технічне завдання на email, і ми зв\'яжемося з вами в найкоротші терміни для обговорення деталей замовлення.',
-                'qr-text': 'Сканирууйте QR-код для переходу на нашу сторінку Pinterest',
-                'footer-text': 'Усі права захищені.',
-                'footer-slogan': 'Професійний 3D друк найвищої якості'
-            }
-        };
-
-        let currentLanguage = 'cs';
-
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update active language button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
-
-            // Update all translatable elements
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-
-            // Update document language
-            document.documentElement.lang = lang;
-            
-            // Update title
-            const titles = {
-                cs: 'JIC - 3D tisk',
-                ru: 'JIC - 3D печать',
-                ua: 'JIC - 3D друк'
-            };
-            document.title = titles[lang];
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 8px 32px rgba(31, 38, 135, 0.5)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = '0 8px 32px rgba(31, 38, 135, 0.37)';
-            }
-        });
-
-        // Add hover animation to sections
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
